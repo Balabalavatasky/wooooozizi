@@ -1,0 +1,36 @@
+<html>
+
+<head>
+    <title>Download</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <script src="../ClientGlobalContext.js.aspx" type="text/javascript"></script>
+    <script src="scripts/exportToCSV.js" type="text/javascript"></script>
+    <script src="scripts/WebAPIBasicOperations.js" type="text/javascript"></script>
+</head>
+
+<body>
+    <div><span id="statusTag">Exporting data, please wait.</span></div>
+</body>
+<script type="text/javascript">
+    import exportCsv from 'scripts/exportToCSV.js';
+    window.onload = function () {
+        Sdk.retrieveVersion().then(function () {
+            Sdk.request("GET", "/systemusers").then(function (result) {
+                var RetrieveVersionResponse = JSON.parse(result.response);
+                console.log(RetrieveVersionResponse.value);
+                exportCsv.exportToCSV(
+                    RetrieveVersionResponse.value,
+                    [
+                    { key: 'internalemailaddress', title: 'Email' },
+                    { key: 'fullname', title: 'Full Name' }
+                    ],
+                    'Users'
+                );
+                document.getElementById("statusTag").textContent ="Export completed, you can close this window.";
+            });
+        });
+    }
+</script>
+
+</html>

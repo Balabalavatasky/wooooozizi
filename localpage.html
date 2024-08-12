@@ -1,0 +1,31 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>test</title>
+
+</head>
+
+<body>
+    <button id="export">导出</button>
+    <script src="./exportToCSV.js"></script>
+    <script>
+        var btn = document.querySelector('#export');
+        var exportCsv = exportToCSV;
+        btn.addEventListener('click', function() {
+            exportCsv.exportToCSV(
+                [
+                    { a: `"aasdasd"!@#\r\nasd,"aa123)"`, b: 2 }
+                ],
+                [
+                    { key: 'a', title: 'val1' },
+                    { key: 'b', title: 'val2', formatter: function (row, col, key) { return row[key] + '%'; } }
+                ],
+                'test'
+            )
+        })
+    </script>
+</body>
+
+</html>
